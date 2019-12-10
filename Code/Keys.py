@@ -1,5 +1,8 @@
 import boto3
 
+'''
+	Configuration File used to store variables pulled from AWS SSM
+'''
 client = boto3.client('ssm', region_name = 'us-east-1')
 API_response = client.get_parameter(Name = 'API_KEY', WithDecryption=True)
 SNS_PATH_RESPONSE = client.get_parameter(Name='SNS_PATH', WithDecryption=True)

@@ -15,6 +15,9 @@ class Database_Class:
 		pass
 
 	def put_item(self, Stock_Name, title, RPC, RP, PRPC, PRP, PPC, PP):
+		'''
+			Puts an entry into DynamoDB
+		'''
 		item = self.build_item(Stock_Name, title, RPC, RP, PRPC, PRP, PPC, PP)
 		response = self.client.put_item(
 	    TableName='Stock_Database',
@@ -22,6 +25,9 @@ class Database_Class:
 		self.update_item(Stock_Name, title)
 
 	def update_item(self, Stock_Name, Title):
+		'''
+			Updates an existing entry in DynamoDB
+		'''
 		response = self.client.update_item(
 		TableName= 'Stock_Database',
 		Key={
@@ -37,6 +43,9 @@ class Database_Class:
 		)
 
 	def build_item(self, Stock_Name, title, RPC, RP, PRPC, PRP, PPC, PP):
+		'''
+			Used to build the Item query for put item
+		'''
 		today_formatted = self.today_unformatted.strftime("%Y-%m-%d")
 		if PRPC == 'None' and PPC == 'None':
 			Item= {
@@ -83,6 +92,9 @@ class Database_Class:
 		return Item
 
 	def put_series(self, series, title):
+		'''
+			Writes results as a series (batch) to DynamoDB
+		'''
 		print(series)
 		for key,value in series.items():
 			self.put_item(key, title, str(value['RPC']), str(value['RP']),
@@ -91,6 +103,9 @@ class Database_Class:
 
 
 	def export_data(self, file_name):
+		'''
+			Pulls results from DynamoDB and exports the data into a CSV File
+		'''
 		response = self.client.scan(
 			TableName = 'Stock_Database')
 
@@ -127,7 +142,9 @@ class Database_Class:
 		df.to_csv(file_name, index=False)
 
 	def create_file(self):
-
+		'''
+			Creates the CSV File used to store data
+		'''
 		df = pd.DataFrame(self.dictionary)
 		self.file_name = f'{self.today}_Stock_Data.csv'
 		df.to_csv(f'Results/{self.file_name}', index=False)

@@ -12,6 +12,6 @@ class SNS_Class:
 		self.today = today_unformatted.strftime("%m/%d/%Y")
 		self.client.publish(
 		TargetArn=Keys.SNS_PATH,
-	    Message=f"Hey Tommy,\n\nHere is today's ({self.today}) Top Movers Report\n----------\n{url}\n\nThanks,\nTommy"
+	    Message=f"Hey There,\n\nHere is today's ({self.today}) Top Movers Report\n----------\n{url}\n\nThanks,\nTommy"
     )
 

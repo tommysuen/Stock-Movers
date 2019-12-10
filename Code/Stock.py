@@ -68,6 +68,7 @@ class Stock_Class:
 			return True
 		else:
 			return False
+			
 	def validation(self, condition, json_file):
 		if condition == 'Pre':
 			if 'preMarketChange' not in json_file['quoteResponse']['result'][0]:
